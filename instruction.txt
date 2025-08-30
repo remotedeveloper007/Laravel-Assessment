@@ -1,0 +1,31 @@
+1. php artisan make:model Admin -m
+
+2. php artisan make:model Customer -m
+
+3. php artisan make:controller Admin/AdminAuthController
+
+4. php artisan make:controller Admin/AdminDashboardController;
+
+5. php artisan make:controller Customer/UserAuthController
+
+6. php artisan make:controller Customer/UserDashboardController
+
+7. php artisan make:controller FrontendController
+
+8. php artisan make:middleware TouchPresence
+
+9. php artisan make:command MarkOffline
+
+10. php artisan make:event UserOnlineStatus
+
+11. php artisan make:listener UpdateUserOnlineStatus --event=UserOnlineStatus
+
+12. composer require pusher/pusher-php-server
+
+13. composer require beyondcode/laravel-websockets --with-all-dependencies
+
+php artisan vendor:publish --provider="BeyondCode\LaravelWebSockets\WebSocketsServiceProvider" --tag="config"
+
+php artisan vendor:publish --provider="BeyondCode\LaravelWebSockets\WebSocketsServiceProvider" --tag="migrations"
+
+php artisan migrate
