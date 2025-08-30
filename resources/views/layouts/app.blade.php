@@ -33,7 +33,6 @@
                 </button>               
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         @if(Auth::guard('admin')->check())
                             <li class="nav-item"><a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a></li>
@@ -81,62 +80,6 @@
                         <li class="nav-item"><a class="nav-link" href="{{ route('admin.login') }}">Admin Login</a></li>
                     @endif
                     </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <!-- <ul class="navbar-nav ms-auto">
-                        
-                        @guest
-                            @if (Route::has('admin.login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.login') }}">{{ __('Admin Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('customer.login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('customer.login') }}">{{ __('Customer Login') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            @php
-                                $user = Auth::guard('admin')->check() ? Auth::guard('admin')->user() : Auth::guard('customer')->user();
-                                $guard = Auth::guard('admin')->check() ? 'admin' : 'customer';
-                            @endphp     
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <img src="{{ asset('storage/'.($user->avatar ?? 'defaults/user.png')) }}" alt="avatar" class="nav-avatar me-2">
-                                    <span> {{ Auth::user()->name }}</span>
-                                </a>
-
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li class="dropdown-item-text">
-                                    <small class="text-muted">Signed in as</small><br>
-                                    <strong>{{ $user->email }}</strong><br>
-                                    <span class="small">
-                                        @if($user->online)
-                                        <span class="badge badge-online">Online</span>
-                                        @else
-                                        <span class="badge badge-offline">Offline</span>
-                                        @endif
-                                    </span>
-                                    </li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{ $guard === 'admin' ? route('admin.logout') : route('customer.logout') }}"
-                                            onclick="event.preventDefault();
-                                                            document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
-                                        </a>
-
-                                        <form id="logout-form" action="{{ $guard === 'admin' ? route('admin.logout') : route('customer.logout') }}" method="POST" class="d-none">
-                                            @csrf
-                                        </form>
-                                    </li>
-                                </ul>
-
-                            </li>
-                        @endguest
-                    </ul>  -->
                 </div>
             </div>
         </nav>
