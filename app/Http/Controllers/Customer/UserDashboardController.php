@@ -11,6 +11,5 @@ class UserDashboardController extends Controller
     public function dashboard()
     {
         return redirect()->route('shop.index');
-        // return view('customer.dashboard');
     }    
 }
