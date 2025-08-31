@@ -5,6 +5,7 @@ use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Customer\UserAuthController;
 use App\Http\Controllers\Customer\UserDashboardController;
 use App\Http\Controllers\PushSubscriptionController;
@@ -33,6 +34,10 @@ Route::prefix('admin')->group(function () {
         Route::get('dashboard', [AdminDashboardController::class, 'dashboard'])->name('admin.dashboard');
 
         Route::resource('products', ProductController::class);
+
+        Route::get('orders', [OrderController::class,'index'])->name('admin.orders.index');
+        
+        Route::patch('orders/{order}/status', [OrderController::class,'updateStatus'])->name('admin.orders.status');
     });
 });
 
@@ -47,9 +52,7 @@ Route::prefix('customer')->group(function () {
     Route::post('logout', [UserAuthController::class,'logout'])->name('customer.logout');
 
     Route::middleware('auth:customer')->group(function () {
-        Route::get('dashboard', function(){ 
-            return view('customer.dashboard'); 
-        })->name('customer.dashboard');
+        Route::get('dashboard', [UserDashboardController::class,'index'])->name('customer.dashboard');
 
         Route::post('orders', [UserDashboardController::class,'store'])->name('customer.orders.store');
 

@@ -19,7 +19,17 @@ class UserDashboardController extends Controller
     {
         $this->middleware('auth:customer');
     }
-    
+
+    public function index()
+    {
+        $orders = Order::where('customer_id', Auth::guard('customer')->id())
+            ->with('items.product')
+            ->latest()
+            ->paginate(5);
+
+        return view('customer.dashboard', compact('orders'));
+    }    
+
     public function store(Request $request)
     {   
         //dd($request->all());
@@ -71,5 +81,6 @@ class UserDashboardController extends Controller
         return redirect()->route('customer.dashboard')->with([
             'status' => 'Order placed successfully.'
         ]);
-    }   
+    } 
+    
 }

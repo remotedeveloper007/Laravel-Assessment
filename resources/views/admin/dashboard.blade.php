@@ -57,7 +57,7 @@
               <h6>Quick Actions</h6>
               <a href="{{ route('products.index') }}" class="btn btn-outline-primary w-100 mb-2">Manage Products</a>
               <a href="#" class="btn btn-outline-secondary w-100 mb-2">Import CSV</a>
-              <a href="#" class="btn btn-outline-success w-100">View Orders</a>
+              <a href="{{ route('admin.orders.index') }}" class="btn btn-outline-success w-100">View Orders</a>
             </div>
           </div>
         </div>
@@ -73,7 +73,27 @@
 
 <script>
 (function(){
-  // Init Echo with Pusher
+
+  toastr.options = {
+      "closeButton": true,
+      "newestOnTop": true,
+      "progressBar": true,
+      "positionClass": "toast-bottom-right",
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut",
+      "tapToDismiss": true
+  };
+
+  const soundSoProud = new Audio('/sounds/so-proud-notification.mp3');
+  const soundArpeggio = new Audio('/sounds/arpeggio-467.mp3');
+
+
   window.Echo = new Echo({
       broadcaster: 'pusher',
       key: '{{ config("broadcasting.connections.pusher.key") }}',
@@ -93,14 +113,28 @@
     .joining(user => renderPresenceAppend(user))
     .leaving(user => removePresence(user))
     .listen('.order.placed', (e) => {
-      const t = `New Order #${e.order_id} by ${e.customer_name} ₹${e.total}`;
-      const toast = document.createElement('div');
-      toast.className = 'toast align-items-center text-bg-success border-0 position-fixed';
-      toast.style.right = '20px'; toast.style.top = '20px'; toast.style.zIndex = 9999;
-      toast.innerHTML = `<div class="d-flex"><div class="toast-body">${t}</div>
-        <button class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button></div>`;
-      document.body.appendChild(toast);
-      new bootstrap.Toast(toast).show();
+      const text = `New Order #${e.order_id} by ${e.customer_name} ₹${e.total}`;
+  
+      toastr.success(text, 'Order Recieved!');
+
+      soundSoProud.currentTime = 0;
+      soundSoProud.play().catch(err => console.log('Sound play blocked:', err));
+
+      const notification = new Notification("Order Recieved!", {
+          body: text,
+          icon: "/images/notification-bell.png",
+          requireInteraction: false
+      });
+
+      
+        const toast = document.createElement('div');
+        toast.className = 'toast align-items-center text-bg-success border-0 position-fixed';
+        toast.style.right = '20px'; toast.style.top = '20px'; toast.style.zIndex = 9999;
+        toast.innerHTML = `<div class="d-flex"><div class="toast-body">${t}</div>
+          <button class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button></div>`;
+        document.body.appendChild(toast);
+        new bootstrap.Toast(toast).show(); 
+      
     });
 
   function renderPresence(users){
