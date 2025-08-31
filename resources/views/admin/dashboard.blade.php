@@ -1,7 +1,9 @@
 @extends('layouts.app')
 @section('title','Admin Dashboard')
+@push('head')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+@endpush
 @section('content')
-
 <div class="container" style="height: 400px;">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -61,25 +63,15 @@
         </div>
     </div>
 </div>
-
-
-
 @endsection
 
 @push('scripts')
-<!-- <script src="https://cdn.jsdelivr.net/npm/pusher-js@8/dist/web/pusher.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/pusher-js@8/dist/web/pusher.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/laravel-echo@^1.11.0/dist/echo.iife.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pusher/8.2.0/pusher.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.15.0/echo.iife.js"></script>
-
-<!-- jQuery (Toastr depends on jQuery) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <script>
-
 (function(){
   // Init Echo with Pusher
   window.Echo = new Echo({
@@ -91,13 +83,25 @@
       cluster: 'mt1',
       disableStats: true,
       withCredentials: true,
+      auth: { headers: { 'X-CSRF-TOKEN': window.csrfToken } },
+      authEndpoint: '/broadcasting/auth',
   });
 
   // Presence Channel
   Echo.join('admin-dashboard')
     .here(users => renderPresence(users))
     .joining(user => renderPresenceAppend(user))
-    .leaving(user => removePresence(user));
+    .leaving(user => removePresence(user))
+    .listen('.order.placed', (e) => {
+      const t = `New Order #${e.order_id} by ${e.customer_name} ₹${e.total}`;
+      const toast = document.createElement('div');
+      toast.className = 'toast align-items-center text-bg-success border-0 position-fixed';
+      toast.style.right = '20px'; toast.style.top = '20px'; toast.style.zIndex = 9999;
+      toast.innerHTML = `<div class="d-flex"><div class="toast-body">${t}</div>
+        <button class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button></div>`;
+      document.body.appendChild(toast);
+      new bootstrap.Toast(toast).show();
+    });
 
   function renderPresence(users){
     const el = document.getElementById('presenceList');
@@ -126,9 +130,6 @@
     const node = document.getElementById('presence-'+user.id);
     if(node) node.remove();
   }
-
-
 })();
 </script>
-
 @endpush

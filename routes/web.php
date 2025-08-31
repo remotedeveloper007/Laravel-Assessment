@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Customer\UserAuthController;
+use App\Http\Controllers\Customer\UserDashboardController;
+use App\Http\Controllers\PushSubscriptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,9 +51,15 @@ Route::prefix('customer')->group(function () {
             return view('customer.dashboard'); 
         })->name('customer.dashboard');
 
+        Route::post('orders', [UserDashboardController::class,'store'])->name('customer.orders.store');
+
+        Route::post('push/subscribe', [PushSubscriptionController::class,'store'])->name('push.subscribe');
     });
 });
 
+Broadcast::routes([
+    'middleware' => ['auth:customer,admin'], // allow both guards
+]);
 // Route::get('/', function () {
 //     return view('welcome');
 // });

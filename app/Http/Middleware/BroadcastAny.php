@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class BroadcastAuthAdmin
+class BroadcastAny
 {
     /**
      * Handle an incoming request.
@@ -16,8 +16,9 @@ class BroadcastAuthAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        Auth::shouldUse('admin');
-
-        return $next($request);
+        if (Auth::guard('admin')->check() || Auth::guard('customer')->check()) {
+            return $next($request);
+        }
+        abort(403);
     }
 }

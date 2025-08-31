@@ -14,6 +14,15 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+Broadcast::channel('orders.{customerId}', function ($user, $customerId) {
+    if ($user instanceof \App\Models\Customer) {
+        return (int)$user->id === (int)$customerId;
+    }
+    if ($user instanceof \App\Models\Admin) {
+        return ['admin' => true, 'name' => $user->name];
+    }
+    return false;
+});
 
 Broadcast::channel('admin-dashboard', function ($user) {
     //
