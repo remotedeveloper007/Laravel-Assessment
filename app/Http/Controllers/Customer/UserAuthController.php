@@ -47,9 +47,9 @@ class UserAuthController extends Controller
             $request->session()->regenerate();
 
         
-            $user = Auth::guard('customer')->user();
+            // $user = Auth::guard('customer')->user();
 
-            event(new UserOnlineStatus($user));    
+            event(new \App\Events\UserOnlineStatus(Auth::guard('customer')->user()));    
             //
             return redirect()->route('customer.dashboard')->with([
                 'status' => 'Welcome, back!',
@@ -63,12 +63,12 @@ class UserAuthController extends Controller
     {
         $user = Auth::guard('customer')->user();
 
-        event(new UserOnlineStatus($user));
+        event(new \App\Events\UserOnlineStatus(Auth::guard('customer')->user()));
 
-        $user->forceFill([
+        $user->update([
             'online' => false,
             'last_seen_at' => now(),
-        ])->saveQuietly(); 
+        ]); 
 
         Auth::guard('customer')->logout();
 

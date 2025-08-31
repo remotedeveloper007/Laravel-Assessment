@@ -33,14 +33,25 @@ return [
             'enable_client_messages' => false,
             'enable_statistics' => true,
         ], */
+        // [
+        //     'id' => env('PUSHER_APP_ID', 'localapp'),
+        //     'name' => 'Local App',
+        //     'key' => env('PUSHER_APP_KEY', 'localkey123'),
+        //     'secret' => env('PUSHER_APP_SECRET', 'localsecret123'),
+        //     'enable_client_messages' => true,
+        //     'enable_statistics' => true,
+        // ], 
+        
         [
-            'id' => env('PUSHER_APP_ID', 'localapp'),
+            'id' => env('PUSHER_APP_ID'),
             'name' => 'Local App',
-            'key' => env('PUSHER_APP_KEY', 'localkey123'),
-            'secret' => env('PUSHER_APP_SECRET', 'localsecret123'),
+            'key' => env('PUSHER_APP_KEY'),
+            'secret' => env('PUSHER_APP_SECRET'),
+            'path' => '',
+            'capacity' => null,
             'enable_client_messages' => true,
             'enable_statistics' => true,
-        ],         
+        ],             
     ],
 
     /*

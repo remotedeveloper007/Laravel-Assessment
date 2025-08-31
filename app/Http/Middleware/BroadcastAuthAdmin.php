@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class TouchPresence
+class BroadcastAuthAdmin
 {
     /**
      * Handle an incoming request.
@@ -16,15 +16,8 @@ class TouchPresence
      */
     public function handle(Request $request, Closure $next): Response
     {
-        foreach (['admin','customer'] as $guard) {
-            if (Auth::guard($guard)->check()) {
-                $user = Auth::guard($guard)->user();
-                $user->forceFill([
-                    'online' => true,
-                    'last_seen_at' => now(),
-                ])->saveQuietly();
-            }
-        }         
+        Auth::shouldUse('admin');
+
         return $next($request);
     }
 }

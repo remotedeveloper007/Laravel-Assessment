@@ -15,17 +15,15 @@ use Illuminate\Support\Facades\Auth;
 */
 
 
-Broadcast::channel('presence.admin-dashboard', function ($user) {
+Broadcast::channel('admin-dashboard', function ($user) {
     //
     if (! $user) return false;
 
-    return $user && $user->canAccessDashboard();
-
-    // return [
-    //     'id' => $user->id,
-    //     'type' => $user instanceof \App\Models\Admin ? 'admin' : 'customer',
-    //     'name' => $user->name,
-    // ];
+    return [
+        'id' => $user->id,
+        'name' => $user->name,
+        'type' => $user instanceof \App\Models\Admin ? 'admin' : 'customer',
+    ];
 });
 
 // Broadcast::channel('App.Models.User.{id}', function ($user, $id) {

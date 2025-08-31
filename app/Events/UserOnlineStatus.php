@@ -12,7 +12,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Queue\SerializesModels;
 
-class UserOnlineStatus
+class UserOnlineStatus implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -36,11 +36,11 @@ class UserOnlineStatus
     {
         //presence.admin-dashboard
         return [
-            new PrivateChannel('presence.admin-dashboard'),
+            new PresenceChannel('admin-dashboard'),
         ];
     }
 
-    public function broadcastWith()
+    public function broadcastWith(): array
     {
         return [
             'user' => [

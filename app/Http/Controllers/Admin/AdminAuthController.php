@@ -47,9 +47,7 @@ class AdminAuthController extends Controller
         if (Auth::guard('admin')->attempt($cred, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            $user = Auth::guard('admin')->user();
-
-            event(new UserOnlineStatus($user));
+            event(new \App\Events\UserOnlineStatus(Auth::guard('admin')->user()));
             
             return redirect()->route('admin.dashboard')->with([
                 'status' => 'Welcome, admin!',
@@ -63,12 +61,12 @@ class AdminAuthController extends Controller
     {
         $user = Auth::guard('admin')->user();
 
-        event(new UserOnlineStatus($user));
+        event(new \App\Events\UserOnlineStatus(Auth::guard('admin')->user()));
 
-        $user->forceFill([
+        $user->update([
             'online' => false,
             'last_seen_at' => now(),
-        ])->saveQuietly(); 
+        ]); 
 
         Auth::guard('admin')->logout();
 

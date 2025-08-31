@@ -36,7 +36,7 @@
                     <ul class="navbar-nav me-auto">
                         @if(Auth::guard('admin')->check())
                             <li class="nav-item"><a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                            
+                            <li class="nav-item"><a class="nav-link" href="{{ route('products.index') }}">Products</a></li>
                         @elseif(Auth::guard('customer')->check())
                             <li class="nav-item"><a class="nav-link" href="{{ route('customer.dashboard') }}">My Dashboard</a></li>
                             <li class="nav-item"><a class="nav-link" href="{{ route('shop.index') }}">Shop</a></li>

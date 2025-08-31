@@ -19,7 +19,12 @@
 
 
                   <div class="row">
-
+                    <div class="col-sm-4">
+                      <div class="p-3 border rounded">
+                        <h3>{{ $productsCount }}</h3>
+                        <small>Products</small>
+                      </div>
+                    </div>
                     <div class="col-sm-4">
                       <div class="p-3 border rounded">
                         <h3>{{ $adminsOnline }}</h3>
@@ -44,6 +49,16 @@
             </div>            
         </div>
 
+        <div class="col-md-4">
+          <div class="card shadow-sm mb-3">
+            <div class="card-body">
+              <h6>Quick Actions</h6>
+              <a href="{{ route('products.index') }}" class="btn btn-outline-primary w-100 mb-2">Manage Products</a>
+              <a href="#" class="btn btn-outline-secondary w-100 mb-2">Import CSV</a>
+              <a href="#" class="btn btn-outline-success w-100">View Orders</a>
+            </div>
+          </div>
+        </div>
     </div>
 </div>
 
@@ -52,10 +67,14 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/pusher-js@8/dist/web/pusher.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/pusher-js@8/dist/web/pusher.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/laravel-echo@^1.11.0/dist/echo.iife.js"></script>
 
-  <!-- jQuery (Toastr depends on jQuery) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pusher/8.2.0/pusher.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.15.0/echo.iife.js"></script>
+
+<!-- jQuery (Toastr depends on jQuery) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
@@ -75,24 +94,10 @@
   });
 
   // Presence Channel
-  // Echo.join('presence.admin-dashboard')
-  //   .here(users => renderPresence(users))
-  //   .joining(user => renderPresenceAppend(user))
-  //   .leaving(user => removePresence(user));
-
-    Echo.join('presence.admin-dashboard')
-    .here(users => {
-        console.log('Current users:', users);  // Check if this logs correctly
-        renderPresence(users);
-    })
-    .joining(user => {
-        console.log('User joining:', user);  // Check if the joining event is fired
-        renderPresenceAppend(user);
-    })
-    .leaving(user => {
-        console.log('User leaving:', user);  // Check if the leaving event is fired
-        removePresence(user);
-    });
+  Echo.join('admin-dashboard')
+    .here(users => renderPresence(users))
+    .joining(user => renderPresenceAppend(user))
+    .leaving(user => removePresence(user));
 
   function renderPresence(users){
     const el = document.getElementById('presenceList');
