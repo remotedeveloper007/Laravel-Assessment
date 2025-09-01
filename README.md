@@ -1,4 +1,4 @@
-# Laravel Developer – Final Requirements
+# Laravel Developer – Requirements Assessment
 
 Objective:
 Build a secure and optimized Laravel web application demonstrating your expertise in:
@@ -108,17 +108,17 @@ Test Passed:
 ## Unit Test: ImportValidationTest → validates import job.
 
 -   PASS  Tests\Unit\ImportValidationTest
-	✓ import job validates rows and creates products   16.74s  
+-	✓ import job validates rows and creates products   16.74s  
 
-## Feature Test: OrderPlacementTest => ensures customer can place orders.
+## Feature Test: OrderPlacementTest → ensures customer can place orders.
 
 -   PASS  Tests\Feature\OrderPlacementTest
-	✓ customer can place order                          0.80s  
+-	✓ customer can place order                          0.80s  
 
-## Feature Test: ProductCreationTest => ensures admin can create products.
+## Feature Test: ProductCreationTest → ensures admin can create products.
 
 -   PASS  Tests\Feature\ProductCreationTest
-	✓ admin can create product                          0.14s  
+-	✓ admin can create product                          0.14s  
 
   Tests:    3 passed (10 assertions)          Duration: 18.10s
 
