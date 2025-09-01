@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 class Customer extends Authenticatable
 {
     //
-    use Notifiable;
+    use Notifiable, HasFactory;
 
     protected $fillable = [
         'name',
