@@ -1,4 +1,4 @@
-# Laravel Developer – Final Requirements
+# Laravel Developer – Requirements Assessment
 
 Objective:
 Build a secure and optimized Laravel web application demonstrating your expertise in:
