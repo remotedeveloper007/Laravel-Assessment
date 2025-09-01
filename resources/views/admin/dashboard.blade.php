@@ -56,7 +56,7 @@
             <div class="card-body">
               <h6>Quick Actions</h6>
               <a href="{{ route('products.index') }}" class="btn btn-outline-primary w-100 mb-2">Manage Products</a>
-              <a href="#" class="btn btn-outline-secondary w-100 mb-2">Import CSV</a>
+              <a href="{{ route('admin.import.show') }}" class="btn btn-outline-secondary w-100 mb-2">Import CSV</a>
               <a href="{{ route('admin.orders.index') }}" class="btn btn-outline-success w-100">View Orders</a>
             </div>
           </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ImportController;
 use App\Http\Controllers\Customer\UserAuthController;
 use App\Http\Controllers\Customer\UserDashboardController;
 use App\Http\Controllers\PushSubscriptionController;
@@ -34,6 +35,9 @@ Route::prefix('admin')->group(function () {
         Route::get('dashboard', [AdminDashboardController::class, 'dashboard'])->name('admin.dashboard');
 
         Route::resource('products', ProductController::class);
+
+        Route::get('import', [ImportController::class,'show'])->name('admin.import.show');
+        Route::post('import', [ImportController::class,'store'])->name('admin.import.store');
 
         Route::get('orders', [OrderController::class,'index'])->name('admin.orders.index');
         

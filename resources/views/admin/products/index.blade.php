@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title','Manage Products')
 @section('content')
-<div class="container" style="height: 400px;">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
             @if (session('status'))
@@ -43,7 +43,7 @@
             </table>
           </div>
         </div>
+        {{ $products->links() }}
     </div>
 </div>
-{{ $products->links() }}
 @endsection
