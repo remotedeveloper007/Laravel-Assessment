@@ -110,12 +110,12 @@ Test Passed:
 -   PASS  Tests\Unit\ImportValidationTest
 -	✓ import job validates rows and creates products   16.74s  
 
-## Feature Test: OrderPlacementTest => ensures customer can place orders.
+## Feature Test: OrderPlacementTest → ensures customer can place orders.
 
 -   PASS  Tests\Feature\OrderPlacementTest
 -	✓ customer can place order                          0.80s  
 
-## Feature Test: ProductCreationTest => ensures admin can create products.
+## Feature Test: ProductCreationTest → ensures admin can create products.
 
 -   PASS  Tests\Feature\ProductCreationTest
 -	✓ admin can create product                          0.14s  
